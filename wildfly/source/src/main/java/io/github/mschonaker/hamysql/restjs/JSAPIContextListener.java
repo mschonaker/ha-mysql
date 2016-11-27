@@ -18,7 +18,7 @@ public class JSAPIContextListener implements ServletContextListener {
 		try {
 
 			Class<? extends Servlet> type = (Class<? extends Servlet>) Class.forName(SERVLET_NAME);
-			context.addServlet(SERVLET_NAME, type).addMapping("/rest-js");
+			context.addServlet(SERVLET_NAME, type).addMapping("/rest.js");
 
 		} catch (Exception e) {
 			context.log("Unable to initialize " + SERVLET_NAME, e);
