@@ -1,7 +1,6 @@
 package io.github.mschonaker.hamysql.api;
 
 import javax.annotation.Resource;
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import javax.ws.rs.Consumes;
@@ -22,7 +21,6 @@ import io.github.mschonaker.hamysql.dao.UsersDAO;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("user")
-@Dependent
 public class UserResource {
 
 	@Resource(name = "jdbc/ha-mysql", lookup = "java:jboss/datasources/ha-mysql")
@@ -33,7 +31,7 @@ public class UserResource {
 
 	@GET
 	@Path("{username}")
-	public User get(@PathParam("username") String username) {
+	public User find(@PathParam("username") String username) {
 		if (username == null)
 			throw new IllegalArgumentException("username");
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
@@ -52,7 +50,7 @@ public class UserResource {
 	}
 
 	@PUT
-	public void put(User user) {
+	public void replace(User user) {
 
 		if (user == null)
 			throw new IllegalArgumentException("body");
