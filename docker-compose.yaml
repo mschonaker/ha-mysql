@@ -1,0 +1,43 @@
+version: '2'
+services:
+  mysql-a:
+    image: erkules/galera:basic
+    ports:
+      - "23306:3306"
+    mem_limit: 300m
+    command: --wsrep-cluster-name=ha-mysql --wsrep-cluster-address=gcomm://
+    environment:
+      - MYSQL_DATABASE=ha-mysql
+      - MYSQL_ROOT_PASSWORD=pw
+      - MYSQL_USER=ha-mysql
+      - MYSQL_PASSWORD=pw
+  mysql-b:
+    image: erkules/galera:basic
+    ports:
+      - "23307:3306"
+    mem_limit: 300m
+    command: --wsrep-cluster-name=ha-mysql --wsrep-cluster-address=gcomm://mysql-a
+    environment:
+      - MYSQL_DATABASE=ha-mysql
+      - MYSQL_ROOT_PASSWORD=pw
+      - MYSQL_USER=ha-mysql
+      - MYSQL_PASSWORD=pw
+  wildfly-a:
+    build: wildfly
+    ports:
+      - "28080:8080"
+    environment:
+      - DOCKER_ENV=compose
+    mem_limit: 300m
+  wildfly-b:
+    build: wildfly
+    ports:
+      - "28081:8080"
+    environment:
+      - DOCKER_ENV=compose
+    mem_limit: 300m
+  nginx:
+    build: nginx
+    ports:
+      - "80:80"
+    mem_limit: 300m
