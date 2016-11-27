@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundler>
+
+	<createUsersTable>
+		create table if not exists users (
+		username
+		varchar(200) not null primary key,
+		password varchar(20) not null,
+		realname varchar(200) not null
+		);
+	</createUsersTable>
+
+</bundler>

@@ -1,4 +1,4 @@
-package io.github.mschonaker.hamysql;
+package io.github.mschonaker.hamysql.api;
 
 public class User {
 

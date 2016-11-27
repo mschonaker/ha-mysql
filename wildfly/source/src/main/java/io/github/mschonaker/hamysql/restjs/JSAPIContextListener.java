@@ -1,4 +1,4 @@
-package io.github.mschonaker.hamysql;
+package io.github.mschonaker.hamysql.restjs;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
