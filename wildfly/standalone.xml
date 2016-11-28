@@ -145,16 +145,21 @@
                     </security>
                 </datasource>
                  <datasource jndi-name="java:jboss/datasources/ha-mysql" pool-name="ha-mysql" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:mysql:loadbalance://mysql-a,mysql-b/ha-mysql</connection-url>
+                    <connection-url>jdbc:mysql://mysql-a,mysql-b,mysql-c/ha-mysql?autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
                     <driver>mysql</driver>
                     <security>
                         <user-name>ha-mysql</user-name>
                         <password>pw</password>
                     </security>
-                    <statement>
-                        <prepared-statement-cache-size>100</prepared-statement-cache-size>
-                        <share-prepared-statements>true</share-prepared-statements>
-                    </statement>
+                  <validation>
+                      <check-valid-connection-sql>select 1</check-valid-connection-sql>
+                      <validate-on-match>false</validate-on-match>
+                      <background-validation>true</background-validation>
+                      <background-validation-millis>2000</background-validation-millis>
+                  </validation>
+                  <statement>
+                      <share-prepared-statements>false</share-prepared-statements>
+                  </statement>
                 </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
