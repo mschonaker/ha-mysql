@@ -144,29 +144,29 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                 <datasource jndi-name="java:jboss/datasources/ha-mysql" pool-name="ha-mysql" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:mysql://mysql-a,mysql-b,mysql-c/ha-mysql?autoReconnect=true&amp;autoReconnectForPools=true</connection-url>
-                    <driver>mysql</driver>
+                <datasource jndi-name="java:jboss/datasources/ha-mysql" pool-name="ha-mysql" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:mariadb://address=(host=mysql-a)(type=master),address=(host=mysql-b)(type=master),address=(host=mysql-c)(type=master)/ha-mysql?autoReconnect=true&amp;loadBalanceBlacklistTimeout=10</connection-url>
+                    <driver>mariadb</driver>
                     <security>
                         <user-name>ha-mysql</user-name>
                         <password>pw</password>
                     </security>
-                  <validation>
+                    <validation>
                       <check-valid-connection-sql>select 1</check-valid-connection-sql>
                       <validate-on-match>false</validate-on-match>
                       <background-validation>true</background-validation>
                       <background-validation-millis>2000</background-validation-millis>
-                  </validation>
-                  <statement>
-                      <share-prepared-statements>false</share-prepared-statements>
-                  </statement>
+                    </validation>
+                    <statement>
+                        <share-prepared-statements>false</share-prepared-statements>
+                    </statement>
                 </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                     </driver>
-                    <driver name="mysql" module="mysql.mysql-connector-java">
-                        <driver-class>com.mysql.jdbc.Driver</driver-class>
+                    <driver name="mariadb" module="org.mariadb.jdbc">
+                        <driver-class>org.mariadb.jdbc.Driver</driver-class>
                     </driver>
                 </drivers>
             </datasources>

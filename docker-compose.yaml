@@ -1,9 +1,11 @@
 version: '2'
 services:
+  ##############################################################################
   mysql-a:
     image: erkules/galera:basic
     mem_limit: 300m
     command: --wsrep-cluster-name=ha-mysql --wsrep-cluster-address=gcomm://
+#    command: --wsrep-cluster-name=ha-mysql --wsrep-cluster-address=gcomm://mysql-b
     environment:
       - MYSQL_DATABASE=ha-mysql
       - MYSQL_ROOT_PASSWORD=pw
@@ -27,6 +29,7 @@ services:
       - MYSQL_ROOT_PASSWORD=pw
       - MYSQL_USER=ha-mysql
       - MYSQL_PASSWORD=pw
+  ##############################################################################
   wildfly-a:
     build: wildfly
     environment:
@@ -37,6 +40,7 @@ services:
     environment:
       - DOCKER_ENV=compose
     mem_limit: 400m
+  ##############################################################################
   nginx:
     build: nginx
     ports:
