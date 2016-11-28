@@ -90,7 +90,10 @@ app.controller('UserController', function($scope, $routeParams, $location) {
 
 app.controller('StatusController', function($scope) {
 	
-	$scope.status = "Under construction!"
+	StatusResource.getHostname({ '$callback':  function(status, request, entity) {
+		$scope.status = request.responseText;
+		$scope.$apply();
+	}});
 	
 });
 
