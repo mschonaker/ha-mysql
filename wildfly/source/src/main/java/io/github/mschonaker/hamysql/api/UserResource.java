@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -46,17 +47,30 @@ public class UserResource {
 			throw new IllegalArgumentException("username");
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
 			users.delete(username);
+			tx.success();
 		}
 	}
 
 	@PUT
-	public void replace(User user) {
+	public void update(User user) {
 
 		if (user == null)
 			throw new IllegalArgumentException("body");
 
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
-			users.replace(user);
+			users.update(user);
+			tx.success();
+		}
+	}
+
+	@POST
+	public void insert(User user) {
+
+		if (user == null)
+			throw new IllegalArgumentException("body");
+
+		try (Transaction tx = Bundler.writeTransaction(ds)) {
+			users.insert(user);
 			tx.success();
 		}
 	}

@@ -5,19 +5,28 @@
 		select username, realname from users where username = ${param}
 	</find>
 
-	<replace>
-		replace into users(username, password, realname) values
+	<insert>
+		insert into users(username, password, realname) values
 		(${param.username},
 		${param.password}, ${param.realname})
-	</replace>
+	</insert>
+
+	<update>
+		update users set realname = ${param.realname}, password =
+		${param.password}
+		where username = ${param.username}
+	</update>
 
 	<delete>
 		delete from users where username = ${param}
 	</delete>
 
-	<findAll>
-		select username, realname from users limit ${params[1]} offset
-		${params[0]}
-	</findAll>
+	<findAll><![CDATA[
+		select username, realname 
+		from users 
+		order by username
+		limit ${params[1]}
+		offset ${params[0]}
+	]]></findAll>
 
 </bundler>
