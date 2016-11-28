@@ -22,6 +22,6 @@ public class ApplicationExceptionMapper implements ExceptionMapper<Exception> {
 		if (exception instanceof IllegalArgumentException)
 			return Response.status(400).entity(exception.getMessage()).build();
 
-		throw new IllegalStateException();
+		throw new IllegalStateException(exception);
 	}
 }
