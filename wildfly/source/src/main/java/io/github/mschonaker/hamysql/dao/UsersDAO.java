@@ -9,11 +9,13 @@ public interface UsersDAO {
 	User find(String username);
 
 	void insert(User user);
-	
+
 	void update(User user);
 
 	void delete(String username);
 
 	List<User> findAll(Long offset, Long limit);
+
+	Boolean exists(String username);
 
 }

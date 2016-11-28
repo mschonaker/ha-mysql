@@ -51,9 +51,14 @@ app.controller('UsersController', function($scope) {
 	}
 	
 	$scope.insert = function() {
-		UserResource.insert({ 
+		UserResource.insert({
 			'$entity' : $scope.aux,
-			'$callback' : $scope.init
+			'$callback' : function(status, request, entity) {
+				if (status == 501)
+					alert("The user already exists: " + request.responseText)
+				else
+					$scope.init();
+			}
 		})
 	}
 

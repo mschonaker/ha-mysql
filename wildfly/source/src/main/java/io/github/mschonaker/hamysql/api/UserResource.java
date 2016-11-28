@@ -45,7 +45,12 @@ public class UserResource {
 	public void delete(@PathParam("username") String username) {
 		if (username == null)
 			throw new IllegalArgumentException("username");
+
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
+
+			if (!users.exists(username))
+				throw new UserDoesntExistException(username);
+
 			users.delete(username);
 			tx.success();
 		}
@@ -54,10 +59,16 @@ public class UserResource {
 	@PUT
 	public void update(User user) {
 
-		if (user == null)
+		if (user == null || user.getUsername() == null || user.getPassword() == null || user.getRealname() == null)
 			throw new IllegalArgumentException("body");
 
+		String username = user.getUsername();
+
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
+
+			if (!users.exists(username))
+				throw new UserDoesntExistException(username);
+
 			users.update(user);
 			tx.success();
 		}
@@ -66,10 +77,16 @@ public class UserResource {
 	@POST
 	public void insert(User user) {
 
-		if (user == null)
+		if (user == null || user.getUsername() == null || user.getPassword() == null || user.getRealname() == null)
 			throw new IllegalArgumentException("body");
 
+		String username = user.getUsername();
+
 		try (Transaction tx = Bundler.writeTransaction(ds)) {
+
+			if (users.exists(username))
+				throw new UserAlreadyExistsException(username);
+
 			users.insert(user);
 			tx.success();
 		}

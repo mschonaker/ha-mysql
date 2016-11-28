@@ -17,6 +17,10 @@
 		where username = ${param.username}
 	</update>
 
+	<exists>
+		select count(1) from users where username = ${param}
+	</exists>
+
 	<delete>
 		delete from users where username = ${param}
 	</delete>
